@@ -29,7 +29,7 @@ ruta.get('/:id', (req, res)=>{
     let CursesCom = existeCurso(req.params.id);
 
     if(!CursesCom)
-        res.status(404).send('El estudiante no se encuentra'); //Devuelve el estado HTTP
+        res.status(404).send('El curso no se encuentra'); //Devuelve el estado HTTP
 
     res.send(CursesCom);
 });
@@ -59,19 +59,20 @@ ruta.post('/',(req, res)=>{
 
 //Peticion PUT
 //Metodo para actualizar informacion
-//Recibe el id del usuario que se quiere modificar
+//Recibe el id del curso que se quiere modificar
 //Utilizando un parametro en la ruta :id
 ruta.put('/:id', (req, res) => {
     let curses = existeCurso(req.params.id);
     if(!curses){
-        res.status(404).send('El estudiante no se encuentra'); //Devuelve el estado HTTP
+        res.status(404).send('El curso no se encuentra'); //Devuelve el estado HTTP
     
         //En el body del request debe venir la informacion para hacer la actualizacion.
         return;
     }
+
     //Validar que el nombre cumpla con las condiciones.
-    
     //El objeto req tiene la propiedad body
+
     const {value, error} = validarCurso(req.body.nombre, req.body.creditos, req.body.carrera);
     if(error){
         const mensaje = error.details[0].message;
@@ -79,7 +80,7 @@ ruta.put('/:id', (req, res) => {
         return;
     }
 
-    //Actualiza el nombre del usuario
+    //Actualiza el los campos (nombre, creditos, carrera) del curso
     curses.nombre      = value.nombre;
     curses.creditos    = value.creditos;
     curses.carrera     = value.carrera;
@@ -90,17 +91,17 @@ ruta.put('/:id', (req, res) => {
 
 //Peticion DELETE
 //Metodo para eliminar informacion
-//Recibe el id del usuario que se quiere eliminar
+//Recibe el id del curso que se quiere eliminar
 //Utilizando un parametro en la ruta :id
 
 ruta.delete('/:id', (req, res) => {
     const curse = existeCurso(req.params.id);
     if(!curse){
-        res.status(404).send('El estudiante no se encuentra');
+        res.status(404).send('El curso no se encuentra');
         return;
     }
 
-    //Encontrar el indice del usuario dentro del arreglo
+    //Encontrar el indice del curso dentro del arreglo
     //Devuelve el indice de la primera ocurrencia del elemento
     const index = Courses.indexOf(curse);
     Courses.splice(index, 1); //Elimina el elemento del indice indicado

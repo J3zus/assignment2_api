@@ -5,7 +5,8 @@ const config = require('config');
 const inicioDebug = require('debug')('app:inicio');
 const dbDebug = require('debug')('app:db');
 const  students = require('./routes/students.js'); //Importa el archivo con las ruta para los estudiantes
-const  curses = require('./routes/courses.js'); //Importa el archivo con las ruta para los estudiantes
+const  curses = require('./routes/courses.js'); //Importa el archivo con las ruta para los cursos
+const  curses = require('./routes/registration.js'); //Importa el archivo con las ruta para el registro de estudiantes en cursos
 
 //JSON hace un parsing de la entrada a formato JSON
 //De tal forma que lo que recibamos 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({extended: true})); //Middleware que cambia o transfo
 app.use(express.static('public')); //Este middleware, Define la ruta para acceder a los recursos estaticos y poder desplegarlos dentro de la aplicacion. 
 app.use('/api/students', students);
 app.use('/api/courses', curses);
+app.use('/api/registration', registration);
 
 console.log(`Aplicacion: ${config.get('nombre')}`);
 console.log(`DB Server: ${config.get('configDB.host')}`);

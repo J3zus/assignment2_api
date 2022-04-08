@@ -59,7 +59,7 @@ ruta.post('/',(req, res)=>{
 
 //Peticion PUT
 //Metodo para actualizar informacion
-//Recibe el id del usuario que se quiere modificar
+//Recibe el id del estudiante que se quiere modificar
 //Utilizando un parametro en la ruta :id
 ruta.put('/:id', (req, res) => {
     let student = existeEstudiante(req.params.id);
@@ -79,7 +79,7 @@ ruta.put('/:id', (req, res) => {
         return;
     }
 
-    //Actualiza el nombre del usuario
+    //Actualiza el nombre, semestre, correo y carrera del estudiante
     student.nombre      = value.nombre;
     student.semestre    = value.semestre;
     student.correo      = value.correo;
@@ -101,11 +101,11 @@ ruta.delete('/:id', (req, res) => {
         return;
     }
 
-    //Encontrar el indice del usuario dentro del arreglo
+    //Encontrar el indice del estudiante dentro del arreglo
     //Devuelve el indice de la primera ocurrencia del elemento
     const index = stdents.indexOf(student);
     stdents.splice(index, 1); //Elimina el elemento del indice indicado
-    res.send(student); //Responde con el usuario eliminado
+    res.send(student); //Responde con el estudante eliminado
 });
 
 function existeEstudiante(id){
