@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true })); //Middleware que cambia o trans
 //Public es el nombre de la carpeta que tendra los recursos estaticos.
 app.use(express.static('public')); //Este middleware, Define la ruta para acceder a los recursos estaticos y poder desplegarlos dentro de la aplicacion. 
 app.use('/api/students', students, );
-app.use('/api/courses', curses);
+app.use('/api/courses', curses.ruta);
 app.use('/api/registration', register);
 
 console.log(`Aplicacion: ${config.get('nombre')}`);

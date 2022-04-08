@@ -9,6 +9,7 @@ const Courses = [{
     nombre: 'Js pro',
     creditos: 6,
     carrera: 'Ing.Sistemas',
+    estudiantes: ''
 }, ];
 
 
@@ -136,4 +137,4 @@ function validarCurso(nom, cre, carr) {
     return (schema.validate({ nombre: nom, creditos: cre, carrera: carr }));
 }
 
-module.exports = ruta; //Se exporta el objeto ruta
+module.exports = { ruta, Courses }; //Se exporta el objeto ruta

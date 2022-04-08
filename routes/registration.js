@@ -65,7 +65,4 @@ function existeRegistro(id) {
     return (Courses.find(u => u.id === parseInt(id)));
 }
 
-
-
-
 module.exports = ruta; //Se exporta el objeto ruta
