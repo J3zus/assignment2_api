@@ -13,15 +13,16 @@ const Courses = [
     },
 ];
 
+
+/*                             ================
+================================  Seleccionar  ===========================
+                               ================
+*/
+
 ruta.get('/', (req, res) =>{
     res.send(Courses);
 });
 
-
-/*                             =============
-================================ Insertar  ===========================
-                               =============
-*/
 
 ruta.get('/:id', (req, res)=>{
     //Devuelve el primer elemento del arreglo que cumpla con un predicado
@@ -33,6 +34,12 @@ ruta.get('/:id', (req, res)=>{
 
     res.send(CursesCom);
 });
+
+
+/*                             =============
+================================ Insertar  ===========================
+                               =============
+*/
 
 //Mandaremos/manipularemos los datos mediante un JSON con un Middleware
 ruta.post('/',(req, res)=>{
@@ -56,6 +63,11 @@ ruta.post('/',(req, res)=>{
     }
 
 });
+
+/*                             =============
+================================ Modificar  ===========================
+                               =============
+*/
 
 //Peticion PUT
 //Metodo para actualizar informacion
@@ -88,6 +100,11 @@ ruta.put('/:id', (req, res) => {
     res.send(curses);
 
 });
+
+/*                             =============
+================================  Borrar   ===========================
+                               =============
+*/
 
 //Peticion DELETE
 //Metodo para eliminar informacion

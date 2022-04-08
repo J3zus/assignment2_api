@@ -14,6 +14,11 @@ const stdents = [
         carrera:'Ing.Sistemas'},
 ];
 
+/*                             ================
+================================  Seleccionar  ===========================
+                               ================
+*/
+
 ruta.get('/', (req, res) =>{
     res.send(stdents);
 });
@@ -30,8 +35,11 @@ ruta.get('/:id', (req, res)=>{
     res.send(studentComp);
 });
 
-//Tiene el mismo nombre que la petiicion GET
-//Express hace la diferencia dependiendo del
+
+/*                             =============
+================================ Insertar  ===========================
+                               =============
+*/
 
 //Mandaremos/manipularemos los datos mediante un JSON con un Middleware
 ruta.post('/',(req, res)=>{
@@ -56,6 +64,11 @@ ruta.post('/',(req, res)=>{
     }
 
 });
+
+/*                             =============
+================================ Modificar  ===========================
+                               =============
+*/
 
 //Peticion PUT
 //Metodo para actualizar informacion
@@ -88,6 +101,11 @@ ruta.put('/:id', (req, res) => {
     res.send(student);
 
 });
+
+/*                             =============
+================================  Borrar   ===========================
+                               =============
+*/
 
 //Peticion DELETE
 //Metodo para eliminar informacion
