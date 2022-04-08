@@ -5,31 +5,30 @@ const Joi = require('joi'); //Importa Joi
 
 //route() --> Funciones GET, POST, PUT, DELETE
 
-const stdents = [
-    {
-        id:1,
-        nombre:'Juan',
-        semestre:5,
-        correo:'juan@gmail.com',
-        carrera:'Ing.Sistemas'},
-];
+const stdents = [{
+    id: 1,
+    nombre: 'Juan',
+    semestre: 5,
+    correo: 'juan@gmail.com',
+    carrera: 'Ing.Sistemas'
+}, ];
 
 /*                             ================
 ================================  Seleccionar  ===========================
                                ================
 */
 
-ruta.get('/', (req, res) =>{
+ruta.get('/', (req, res) => {
     res.send(stdents);
 });
 
 //http://localhost:3000/api/students/2/sex='m'&name=''
-ruta.get('/:id', (req, res)=>{
+ruta.get('/:id', (req, res) => {
     //Devuelve el primer elemento del arreglo que cumpla con un predicado
     //parseInt hace el casteo a entero directamente
     let studentComp = existeEstudiante(req.params.id);
 
-    if(!studentComp)
+    if (!studentComp)
         res.status(404).send('El estudiante no se encuentra'); //Devuelve el estado HTTP
 
     res.send(studentComp);
@@ -42,23 +41,23 @@ ruta.get('/:id', (req, res)=>{
 */
 
 //Mandaremos/manipularemos los datos mediante un JSON con un Middleware
-ruta.post('/',(req, res)=>{
+ruta.post('/', (req, res) => {
     //El objeto req tiene la propiedad body
 
-    const {value, error} = validarEstudiante(req.body.nombre, req.body.semestre, req.body.correo, req.body.carrera);
-    if(!error){
+    const { value, error } = validarEstudiante(req.body.nombre, req.body.semestre, req.body.correo, req.body.carrera);
+    if (!error) {
         const student = {
-            id:stdents.length + 1,
-            nombre:req.body.nombre,
-            semestre:req.body.semestre,
-            correo:req.body.correo,
-            carrera:req.body.carrera
+            id: stdents.length + 1,
+            nombre: req.body.nombre,
+            semestre: req.body.semestre,
+            correo: req.body.correo,
+            carrera: req.body.carrera
         };
 
         stdents.push(student);
         res.send(student);
 
-    }else{
+    } else {
         const mensaje = error.details[0].message;
         res.status(400).send(mensaje);
     }
@@ -76,27 +75,27 @@ ruta.post('/',(req, res)=>{
 //Utilizando un parametro en la ruta :id
 ruta.put('/:id', (req, res) => {
     let student = existeEstudiante(req.params.id);
-    if(!student){
+    if (!student) {
         res.status(404).send('El estudiante no se encuentra'); //Devuelve el estado HTTP
-    
+
         //En el body del request debe venir la informacion para hacer la actualizacion.
         return;
     }
     //Validar que el nombre cumpla con las condiciones.
-    
+
     //El objeto req tiene la propiedad body
-    const {value, error} = validarEstudiante(req.body.nombre, req.body.semestre, req.body.correo, req.body.carrera);
-    if(error){
+    const { value, error } = validarEstudiante(req.body.nombre, req.body.semestre, req.body.correo, req.body.carrera);
+    if (error) {
         const mensaje = error.details[0].message;
         res.status(400).send(mensaje);
         return;
     }
 
     //Actualiza el nombre, semestre, correo y carrera del estudiante
-    student.nombre      = value.nombre;
-    student.semestre    = value.semestre;
-    student.correo      = value.correo;
-    student.carrera     = value.carrera;
+    student.nombre = value.nombre;
+    student.semestre = value.semestre;
+    student.correo = value.correo;
+    student.carrera = value.carrera;
 
     res.send(student);
 
@@ -114,7 +113,7 @@ ruta.put('/:id', (req, res) => {
 
 ruta.delete('/:id', (req, res) => {
     const student = existeEstudiante(req.params.id);
-    if(!student){
+    if (!student) {
         res.status(404).send('El estudiante no se encuentra');
         return;
     }
@@ -126,18 +125,18 @@ ruta.delete('/:id', (req, res) => {
     res.send(student); //Responde con el estudante eliminado
 });
 
-function existeEstudiante(id){
+function existeEstudiante(id) {
     return (stdents.find(u => u.id === parseInt(id)));
 }
 
-function validarEstudiante(nom,sem,cor,carr){
+function validarEstudiante(nom, sem, cor, carr) {
     const schema = Joi.object({
-        nombre:Joi.string().min(3).required(),
-        semestre:Joi.number().required(),
-        correo:Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
-        carrera:Joi.string().min(3).required()
+        nombre: Joi.string().min(3).required(),
+        semestre: Joi.number().required(),
+        correo: Joi.string().email({ minDomainSegments: 2, tlds: { allow: ['com', 'net'] } }).required(),
+        carrera: Joi.string().min(3).required()
     });
-    return (schema.validate({nombre:nom, semestre:sem, correo:cor, carrera:carr}));
+    return (schema.validate({ nombre: nom, semestre: sem, correo: cor, carrera: carr }));
 }
 
 module.exports = ruta; //Se exporta el objeto ruta
